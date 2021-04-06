@@ -1,4 +1,6 @@
-﻿namespace FlightsManager.Data.Models
+﻿using System.Collections.Generic;
+
+namespace FlightsManager.Data.Models
 {
     public class Passenger
     {
@@ -10,6 +12,6 @@
         public string Telephone { get; set; }
         public string Nationality { get; set; }
 
-        //public List<PassengerReservation> Reservations { get; set; }
+        public List<PassengerReservation> Reservations { get; set; }
     }
 }

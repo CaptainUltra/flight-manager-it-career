@@ -12,6 +12,6 @@ namespace FlightsManager.Data.Models
         public bool IsConfirmed { get; set; }
         public int FlightId { get; set; }
         public Flight Flight { get; set; }
-        //public List<PassengerReservation> Passengers { get; set; }
+        public List<PassengerReservation> Passengers { get; set; }
     }
 }
