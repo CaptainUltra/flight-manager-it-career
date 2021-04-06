@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using FlightsManager.Data.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -12,5 +13,6 @@ namespace FlightManager.Data
             : base(options)
         {
         }
+        public DbSet<Flight> Flights { get; set; }
     }
 }
