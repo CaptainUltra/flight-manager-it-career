@@ -14,5 +14,14 @@ namespace FlightManager.Data
         {
         }
         public DbSet<Flight> Flights { get; set; }
+        public DbSet<Passenger> Passengers { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Passenger>()
+                .HasIndex(b => b.PersonalNo)
+                .IsUnique();
+            base.OnModelCreating(modelBuilder);
+        }
     }
 }
