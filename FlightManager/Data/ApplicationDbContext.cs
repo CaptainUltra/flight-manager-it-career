@@ -1,5 +1,6 @@
 ﻿using FlightManager.Data.Models;
 using FlightsManager.Data.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -21,6 +22,19 @@ namespace FlightManager.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            #region IdentityRole seeding
+            modelBuilder.Entity<IdentityRole>().HasData(
+                new IdentityRole
+                {
+                    Name = "Admin"
+                },
+                new IdentityRole
+                {
+                    Name = "Employee"
+                }
+            );
+            #endregion
+
             modelBuilder.Entity<Passenger>()
                 .HasIndex(b => b.PersonalNo)
                 .IsUnique();
