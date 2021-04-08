@@ -26,11 +26,13 @@ namespace FlightManager.Data
             modelBuilder.Entity<IdentityRole>().HasData(
                 new IdentityRole
                 {
-                    Name = "Admin"
+                    Name = "Admin",
+                    NormalizedName = "ADMIN"
                 },
                 new IdentityRole
                 {
-                    Name = "Employee"
+                    Name = "Employee",
+                    NormalizedName = "EMPLOYEE"
                 }
             );
             #endregion
