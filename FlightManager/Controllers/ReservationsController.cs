@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using FlightManager.Data;
 using FlightsManager.Data.Models;
+using FlightManager.Models;
 
 namespace FlightManager.Controllers
 {
@@ -63,10 +64,68 @@ namespace FlightManager.Controllers
             {
                 _context.Add(reservation);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                var passengerCount = Int32.Parse(this.Request.Form.FirstOrDefault(x => x.Key == "PassengerCount").Value);
+                return RedirectToAction(nameof(AddPassengers), new { count = passengerCount, reservation = reservation.Id });
             }
             ViewData["FlightId"] = new SelectList(_context.Flights, "Id", "Id", reservation.FlightId);
             return View(reservation);
+        }
+
+        // GET: Reservations/AddPassengers
+        public IActionResult AddPassengers()
+        {
+            int count = Int32.Parse(this.Request.Query["count"]);
+            int reservationId = Int32.Parse(this.Request.Query["reservation"]);
+            var passengerReservationViewModel = new PassengerReservationViewModel() { PassengerCount = count, CurrentCount = count, ReservationId = reservationId};
+            return View(passengerReservationViewModel);
+        }
+
+        // POST: Reservations/AddPassengers
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AddPassengers(int? rnd = null)
+        {
+            var model = new PassengerReservationViewModel(this.Request.Form);
+            if (ModelState.IsValid)
+            {
+                var passenger = await _context.Passengers.FirstOrDefaultAsync(x => x.PersonalNo == model.PersonalNo);
+                if (passenger == null)
+                {
+                    var newPassenger = new Passenger()
+                    {
+                        FirstName = model.FirstName,
+                        LastName = model.LastName,
+                        MiddleName = model.MiddleName,
+                        Nationality = model.Nationality,
+                        PersonalNo = model.PersonalNo,
+                        Telephone = model.Telephone
+                    };
+                    _context.Passengers.Add(newPassenger);
+                    await _context.SaveChangesAsync();
+                    passenger = await _context.Passengers.FindAsync(newPassenger.Id);
+                }
+
+                var reservation = await _context.Reservations.FindAsync(model.ReservationId);
+                var relation = new PassengerReservation() { Passenger = passenger, PassengerId = passenger.Id, ReservationId = reservation.Id, Reservation = reservation, TicketType = TicketTypes.Business };
+
+                reservation.Passengers.Add(relation);
+                passenger.Reservations.Add(relation);
+                await _context.SaveChangesAsync();
+
+                model = new PassengerReservationViewModel()
+                {
+                    ReservationId = model.ReservationId,
+                    CurrentCount = model.CurrentCount - 1,
+                    PassengerCount = model.PassengerCount
+                };
+            }
+
+            if (model.PassengerCount == model.CurrentCount)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+            
+            return View(model);
         }
 
         // GET: Reservations/Edit/5

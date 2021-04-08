@@ -1,21 +1,19 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using FlightsManager.Data.Models;
 using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
+using System.Threading.Tasks;
 
-namespace FlightsManager.Data.Models
+namespace FlightManager.Models
 {
-    public class Reservation
+    public class ReservationViewModel
     {
-        public Reservation()
-        {
-            this.Passengers = new List<PassengerReservation>();
-        }
         public int Id { get; set; }
         public string Email { get; set; }
         public bool IsConfirmed { get; set; }
         public int FlightId { get; set; }
         public Flight Flight { get; set; }
         public List<PassengerReservation> Passengers { get; set; }
+        public int PassengerCount { get; set; }
     }
 }
