@@ -1,5 +1,6 @@
 ﻿using FlightManager.Areas.Identity.Pages.Account;
 using FlightManager.Data.Models;
+using FlightManager.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -12,9 +13,9 @@ namespace FlightManager.Controllers
     public class UsersController : Controller
     {
         private UserManager<User> userManager;
-        public UsersController(UserManager<User> usrMgr)
+        public UsersController(UserManager<User> userManager)
         {
-            this.userManager = usrMgr;
+            this.userManager = userManager;
         }
         public IActionResult Index()
         {
@@ -45,11 +46,65 @@ namespace FlightManager.Controllers
                     return RedirectToAction(nameof(Index));
                 else
                 {
-                    foreach (IdentityError error in result.Errors)
-                        ModelState.AddModelError("", error.Description);
+                    Errors(result);
                 }
             }
             return View(input);
+        }
+
+        public async Task<IActionResult> Edit(string id)
+        {
+            User user = await userManager.FindByIdAsync(id);
+            if (user != null)
+            {
+                var model = new UserEditViewModel()
+                {
+                    Id = user.Id,
+                    Address = user.Address,
+                    FirstName = user.FirstName,
+                    LastName = user.LastName,
+                    PersonalNo = user.PersonalNo
+                };
+                return View(model);
+            }
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(string id, UserEditViewModel model)
+        {
+            User user = await userManager.FindByIdAsync(id);
+            if (user == null)
+            {
+                ModelState.AddModelError("", "User Not Found");
+                return View(user);
+            }
+
+            if (ModelState.IsValid)
+            {
+                user.Address = model.Address;
+                user.FirstName = model.FirstName;
+                user.LastName = model.LastName;
+                user.PersonalNo = model.PersonalNo;
+                IdentityResult result = await userManager.UpdateAsync(user);
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    Errors(result);
+                }
+            }
+            
+            return View(user);
+        }
+
+        private void Errors(IdentityResult result)
+        {
+            foreach (IdentityError error in result.Errors)
+                ModelState.AddModelError("", error.Description);
         }
     }
 }
