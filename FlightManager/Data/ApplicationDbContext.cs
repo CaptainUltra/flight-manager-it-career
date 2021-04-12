@@ -52,7 +52,7 @@ namespace FlightManager.Data
             modelBuilder.Entity<PassengerReservation>()
                 .HasOne(pr => pr.Reservation)
                 .WithMany(r => r.Passengers)
-                .HasForeignKey(pr => pr.PassengerId);
+                .HasForeignKey(pr => pr.ReservationId);
 
             base.OnModelCreating(modelBuilder);
         }
