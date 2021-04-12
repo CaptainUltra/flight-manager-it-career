@@ -120,7 +120,7 @@ namespace FlightManager.Controllers
                 };
             }
 
-            if (model.PassengerCount == model.CurrentCount)
+            if (model.CurrentCount == 0)
             {
                 return RedirectToAction(nameof(Index));
             }
