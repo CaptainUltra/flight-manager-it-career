@@ -72,10 +72,16 @@ namespace FlightManager.Controllers
         }
 
         // GET: Reservations/AddPassengers
-        public IActionResult AddPassengers()
+        public async Task<IActionResult> AddPassengers()
         {
             int count = Int32.Parse(this.Request.Query["count"]);
             int reservationId = Int32.Parse(this.Request.Query["reservation"]);
+
+            var reservation = await _context.Reservations.FindAsync(reservationId);
+            var flight = await _context.Flights.FindAsync(reservation.FlightId);
+            ViewData.Add("BusinessSeats", flight.BusinessCapacity);
+            ViewData.Add("RegularSeats", flight.PassengerCapacity);
+
             var passengerReservationViewModel = new PassengerReservationViewModel() { PassengerCount = count, CurrentCount = count, ReservationId = reservationId};
             return View(passengerReservationViewModel);
         }
@@ -86,6 +92,11 @@ namespace FlightManager.Controllers
         public async Task<IActionResult> AddPassengers(int? rnd = null)
         {
             var model = new PassengerReservationViewModel(this.Request.Form);
+            var reservation = await _context.Reservations.FindAsync(model.ReservationId);
+            var flight = await _context.Flights.FindAsync(reservation.FlightId);
+            ViewData.Add("BusinessSeats", flight.BusinessCapacity);
+            ViewData.Add("RegularSeats", flight.PassengerCapacity);
+                
             if (ModelState.IsValid)
             {
                 var passenger = await _context.Passengers.FirstOrDefaultAsync(x => x.PersonalNo == model.PersonalNo);
@@ -105,7 +116,6 @@ namespace FlightManager.Controllers
                     passenger = await _context.Passengers.FindAsync(newPassenger.Id);
                 }
 
-                var reservation = await _context.Reservations.FindAsync(model.ReservationId);
                 var relation = new PassengerReservation() { Passenger = passenger, PassengerId = passenger.Id, ReservationId = reservation.Id, Reservation = reservation, TicketType = TicketTypes.Business };
 
                 reservation.Passengers.Add(relation);

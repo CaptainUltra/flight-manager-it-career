@@ -5,9 +5,21 @@
 }
 
 
-<h1>PassengerReservation</h1>
+<h1>Добавяне на пътник към резервацията</h1>
 <hr />
 <div class="row">
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header">Места на този полет:</div>
+            <div class="card-body">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">Обикновени <strong>@ViewData["RegularSeats"]</strong></li>
+                    <li class="list-group-item">Бизнес клас <strong>@ViewData["BusinessSeats"]</strong></li>
+                </ul>
+                <p class="mt-2">*Местата няма да бъдат резервирани докато не потвърдите резервацията на email.</p>
+            </div>
+        </div>
+    </div>
     <div class="col-md-4">
         <form asp-action="AddPassengers">
             <input asp-for="CurrentCount" type="hidden" class="form-control" />
@@ -15,37 +27,37 @@
             <input asp-for="ReservationId" type="hidden" class="form-control" />
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="PersonalNo" class="control-label"></label>
+                <label asp-for="PersonalNo" class="control-label">ЕГН</label>
                 <input asp-for="PersonalNo" class="form-control" />
                 <span asp-validation-for="PersonalNo" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="FirstName" class="control-label"></label>
+                <label asp-for="FirstName" class="control-label">Име</label>
                 <input asp-for="FirstName" class="form-control" />
                 <span asp-validation-for="FirstName" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="MiddleName" class="control-label"></label>
+                <label asp-for="MiddleName" class="control-label">Презиме</label>
                 <input asp-for="MiddleName" class="form-control" />
                 <span asp-validation-for="MiddleName" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="LastName" class="control-label"></label>
+                <label asp-for="LastName" class="control-label">Фамилия</label>
                 <input asp-for="LastName" class="form-control" />
                 <span asp-validation-for="LastName" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Telephone" class="control-label"></label>
+                <label asp-for="Telephone" class="control-label">Телефон</label>
                 <input asp-for="Telephone" class="form-control" />
                 <span asp-validation-for="Telephone" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Nationality" class="control-label"></label>
+                <label asp-for="Nationality" class="control-label">Националност</label>
                 <input asp-for="Nationality" class="form-control" />
                 <span asp-validation-for="Nationality" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Добавяне" class="btn btn-primary" />
             </div>
         </form>
     </div>
