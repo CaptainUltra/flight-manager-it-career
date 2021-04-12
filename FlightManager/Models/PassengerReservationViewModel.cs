@@ -18,6 +18,7 @@ namespace FlightManager.Models
             Nationality = form.FirstOrDefault(x => x.Key == "Nationality").Value;
             PersonalNo = form.FirstOrDefault(x => x.Key == "PersonalNo").Value;
             Telephone = form.FirstOrDefault(x => x.Key == "Telephone").Value;
+            TicketType = Int32.Parse(form.FirstOrDefault(x => x.Key == "TicketType").Value);
             CurrentCount = Int32.Parse(form.FirstOrDefault(x => x.Key == "CurrentCount").Value);
             PassengerCount = Int32.Parse(form.FirstOrDefault(x => x.Key == "PassengerCount").Value);
             ReservationId = Int32.Parse(form.FirstOrDefault(x => x.Key == "ReservationId").Value);
@@ -31,5 +32,6 @@ namespace FlightManager.Models
         public string LastName { get; set; }
         public string Telephone { get; set; }
         public string Nationality { get; set; }
+        public int TicketType { get; set; }
     }
 }

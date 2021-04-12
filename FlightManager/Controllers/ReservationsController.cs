@@ -82,7 +82,7 @@ namespace FlightManager.Controllers
             ViewData.Add("BusinessSeats", flight.BusinessCapacity);
             ViewData.Add("RegularSeats", flight.PassengerCapacity);
 
-            var passengerReservationViewModel = new PassengerReservationViewModel() { PassengerCount = count, CurrentCount = count, ReservationId = reservationId};
+            var passengerReservationViewModel = new PassengerReservationViewModel() { PassengerCount = count, CurrentCount = count, ReservationId = reservationId };
             return View(passengerReservationViewModel);
         }
 
@@ -96,7 +96,7 @@ namespace FlightManager.Controllers
             var flight = await _context.Flights.FindAsync(reservation.FlightId);
             ViewData.Add("BusinessSeats", flight.BusinessCapacity);
             ViewData.Add("RegularSeats", flight.PassengerCapacity);
-                
+
             if (ModelState.IsValid)
             {
                 var passenger = await _context.Passengers.FirstOrDefaultAsync(x => x.PersonalNo == model.PersonalNo);
@@ -116,11 +116,39 @@ namespace FlightManager.Controllers
                     passenger = await _context.Passengers.FindAsync(newPassenger.Id);
                 }
 
-                var relation = new PassengerReservation() { Passenger = passenger, PassengerId = passenger.Id, ReservationId = reservation.Id, Reservation = reservation, TicketType = TicketTypes.Business };
+                int capacity = 0;
+                TicketTypes? ticketType = null;
+                switch (model.TicketType)
+                {
+                    case 1:
+                        {
+                            capacity = reservation.Flight.PassengerCapacity;
+                            ticketType = TicketTypes.Regular;
+                            break;
+                        }
+                    case 2:
+                        {
+                            capacity = reservation.Flight.BusinessCapacity;
+                            ticketType = TicketTypes.Business;
+                            break;
+                        }
+                }
 
-                reservation.Passengers.Add(relation);
-                passenger.Reservations.Add(relation);
-                await _context.SaveChangesAsync();
+                if (capacity > 0)
+                {
+                    var relation = new PassengerReservation() 
+                    { 
+                        Passenger = passenger,
+                        PassengerId = passenger.Id,
+                        ReservationId = reservation.Id,
+                        Reservation = reservation,
+                        TicketType = (TicketTypes)ticketType 
+                    };
+
+                    reservation.Passengers.Add(relation);
+                    passenger.Reservations.Add(relation);
+                    await _context.SaveChangesAsync();
+                }                
 
                 model = new PassengerReservationViewModel()
                 {
@@ -134,7 +162,7 @@ namespace FlightManager.Controllers
             {
                 return RedirectToAction(nameof(Index));
             }
-            
+
             return View(model);
         }
 
