@@ -51,7 +51,7 @@ namespace FlightManager.Controllers
         // GET: Reservations/Create
         public IActionResult Create()
         {
-            ViewData["FlightId"] = new SelectList(_context.Flights, "Id", "Id");
+            ViewData["FlightId"] = new SelectList(_context.Flights, "Id", "FlightNumber");
             return View();
         }
 
@@ -69,7 +69,7 @@ namespace FlightManager.Controllers
                 var passengerCount = Int32.Parse(this.Request.Form.FirstOrDefault(x => x.Key == "PassengerCount").Value);
                 return RedirectToAction(nameof(AddPassengers), new { count = passengerCount, reservation = reservation.Id });
             }
-            ViewData["FlightId"] = new SelectList(_context.Flights, "Id", "Id", reservation.FlightId);
+            ViewData["FlightId"] = new SelectList(_context.Flights, "Id", "FlightNumber", reservation.FlightId);
             return View(reservation);
         }
 
@@ -181,7 +181,7 @@ namespace FlightManager.Controllers
             {
                 return NotFound();
             }
-            ViewData["FlightId"] = new SelectList(_context.Flights, "Id", "Id", reservation.FlightId);
+            ViewData["FlightId"] = new SelectList(_context.Flights, "Id", "FlightNumber", reservation.FlightId);
             return View(reservation);
         }
 
@@ -217,7 +217,7 @@ namespace FlightManager.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["FlightId"] = new SelectList(_context.Flights, "Id", "Id", reservation.FlightId);
+            ViewData["FlightId"] = new SelectList(_context.Flights, "Id", "FlightNumber", reservation.FlightId);
             return View(reservation);
         }
 
