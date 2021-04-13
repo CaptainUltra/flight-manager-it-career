@@ -37,6 +37,8 @@ namespace FlightManager.Controllers
 
             var reservation = await _context.Reservations
                 .Include(r => r.Flight)
+                .Include(r => r.Passengers)
+                .ThenInclude(p => p.Passenger)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (reservation == null)
             {
