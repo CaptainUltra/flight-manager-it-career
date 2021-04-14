@@ -33,9 +33,9 @@ namespace FlightManager.Controllers
 
         [HttpPost]
         [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> Create(RegisterModel.InputModel input)
+        public async Task<IActionResult> Create(UserCreateViewModel input)
         {
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 User user = new User
                 {
@@ -47,9 +47,14 @@ namespace FlightManager.Controllers
                     PersonalNo = input.PersonalNo
                 };
 
+                string role = input.Role == 1 ? "Admin" : "Employee";
+
                 var result = await userManager.CreateAsync(user, input.Password);
-                if (result.Succeeded)
+                var result1 = await userManager.AddToRoleAsync(user, role);
+                if (result.Succeeded && result1.Succeeded)
+                {
                     return RedirectToAction(nameof(Index));
+                }
                 else
                 {
                     Errors(result);
@@ -81,13 +86,15 @@ namespace FlightManager.Controllers
             User user = await userManager.FindByIdAsync(id);
             if (user != null)
             {
+                var role = userManager.GetRolesAsync(user).Result.First();
                 var model = new UserEditViewModel()
                 {
                     Id = user.Id,
                     Address = user.Address,
                     FirstName = user.FirstName,
                     LastName = user.LastName,
-                    PersonalNo = user.PersonalNo
+                    PersonalNo = user.PersonalNo,
+                    Role = role == "Admin" ? 1 : 2
                 };
                 return View(model);
             }
@@ -112,6 +119,10 @@ namespace FlightManager.Controllers
                 user.FirstName = model.FirstName;
                 user.LastName = model.LastName;
                 user.PersonalNo = model.PersonalNo;
+                string role = model.Role == 1 ? "Admin" : "Employee";
+                await userManager.RemoveFromRoleAsync(user, "Admin");
+                await userManager.RemoveFromRoleAsync(user, "Employee");
+                var result1 = await userManager.AddToRoleAsync(user, role);
                 IdentityResult result = await userManager.UpdateAsync(user);
                 if (result.Succeeded)
                 {
@@ -122,7 +133,7 @@ namespace FlightManager.Controllers
                     Errors(result);
                 }
             }
-            
+
             return View(user);
         }
 
