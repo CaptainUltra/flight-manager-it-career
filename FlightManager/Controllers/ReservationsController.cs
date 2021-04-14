@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using FlightManager.Data;
 using FlightsManager.Data.Models;
-using FlightManager.Models;
+using FlightManager.ViewModels;
 
 namespace FlightManager.Controllers
 {

@@ -1,4 +1,4 @@
-﻿using FlightManager.Models;
+﻿using FlightManager.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;

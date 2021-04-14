@@ -1,6 +1,6 @@
 ﻿using FlightManager.Areas.Identity.Pages.Account;
 using FlightManager.Data.Models;
-using FlightManager.Models;
+using FlightManager.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace FlightManager.Models
+namespace FlightManager.ViewModels
 {
     public class PassengerReservationViewModel
     {
@@ -18,10 +18,10 @@ namespace FlightManager.Models
             Nationality = form.FirstOrDefault(x => x.Key == "Nationality").Value;
             PersonalNo = form.FirstOrDefault(x => x.Key == "PersonalNo").Value;
             Telephone = form.FirstOrDefault(x => x.Key == "Telephone").Value;
-            TicketType = Int32.Parse(form.FirstOrDefault(x => x.Key == "TicketType").Value);
-            CurrentCount = Int32.Parse(form.FirstOrDefault(x => x.Key == "CurrentCount").Value);
-            PassengerCount = Int32.Parse(form.FirstOrDefault(x => x.Key == "PassengerCount").Value);
-            ReservationId = Int32.Parse(form.FirstOrDefault(x => x.Key == "ReservationId").Value);
+            TicketType = int.Parse(form.FirstOrDefault(x => x.Key == "TicketType").Value);
+            CurrentCount = int.Parse(form.FirstOrDefault(x => x.Key == "CurrentCount").Value);
+            PassengerCount = int.Parse(form.FirstOrDefault(x => x.Key == "PassengerCount").Value);
+            ReservationId = int.Parse(form.FirstOrDefault(x => x.Key == "ReservationId").Value);
         }
         public int ReservationId { get; set; }
         public int PassengerCount { get; set; }
