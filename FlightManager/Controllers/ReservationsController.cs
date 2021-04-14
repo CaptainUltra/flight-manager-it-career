@@ -22,7 +22,7 @@ namespace FlightManager.Controllers
         }
 
         // GET: Reservations
-        [Authorize(Roles = "Administrator,Employee")]
+        [Authorize(Roles = "Admin,Employee")]
         public async Task<IActionResult> Index()
         {
             var applicationDbContext = _context.Reservations.Include(r => r.Flight);
@@ -30,7 +30,7 @@ namespace FlightManager.Controllers
         }
 
         // GET: Reservations/Details/5
-        [Authorize(Roles = "Administrator,Employee")]
+        [Authorize(Roles = "Admin,Employee")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -172,7 +172,7 @@ namespace FlightManager.Controllers
         }
 
         // GET: Reservations/Edit/5
-        [Authorize(Roles = "Administrator,Employee")]
+        [Authorize(Roles = "Admin,Employee")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -194,7 +194,7 @@ namespace FlightManager.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Administrator,Employee")]
+        [Authorize(Roles = "Admin,Employee")]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Email,IsConfirmed,FlightId")] Reservation reservation)
         {
             if (id != reservation.Id)
@@ -227,7 +227,7 @@ namespace FlightManager.Controllers
         }
 
         // GET: Reservations/Delete/5
-        [Authorize(Roles = "Administrator,Employee")]
+        [Authorize(Roles = "Admin,Employee")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -249,7 +249,7 @@ namespace FlightManager.Controllers
         // POST: Reservations/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Administrator,Employee")]
+        [Authorize(Roles = "Admin,Employee")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var reservation = await _context.Reservations.FindAsync(id);

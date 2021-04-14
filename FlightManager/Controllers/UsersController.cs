@@ -19,20 +19,20 @@ namespace FlightManager.Controllers
             this.userManager = userManager;
         }
 
-        [Authorize(Roles = "Administrator")]
+        [Authorize(Roles = "Admin")]
         public IActionResult Index()
         {
             return View(userManager.Users);
         }
 
-        [Authorize(Roles = "Administrator")]
+        [Authorize(Roles = "Admin")]
         public IActionResult Create()
         {
             return View();
         }
 
         [HttpPost]
-        [Authorize(Roles = "Administrator")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Create(RegisterModel.InputModel input)
         {
             if(ModelState.IsValid)
@@ -58,7 +58,7 @@ namespace FlightManager.Controllers
             return View(input);
         }
 
-        [Authorize(Roles = "Administrator")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Details(string id)
         {
             if (id == null)
@@ -75,7 +75,7 @@ namespace FlightManager.Controllers
             return View(user);
         }
 
-        [Authorize(Roles = "Administrator")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(string id)
         {
             User user = await userManager.FindByIdAsync(id);
@@ -96,7 +96,7 @@ namespace FlightManager.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Administrator")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(string id, UserEditViewModel model)
         {
             User user = await userManager.FindByIdAsync(id);
@@ -126,7 +126,7 @@ namespace FlightManager.Controllers
             return View(user);
         }
 
-        [Authorize(Roles = "Administrator")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(string id)
         {
             if (id == null)
@@ -145,7 +145,7 @@ namespace FlightManager.Controllers
 
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Administrator")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteConfirmed(string id)
         {
             User user = await userManager.FindByIdAsync(id);
