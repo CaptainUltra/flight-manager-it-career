@@ -29,6 +29,9 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Flights" asp-action="Index">Полети</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Reservations" asp-action="Create">Направи резервация</a>
+                        </li>
                         @if (SignInManager.IsSignedIn(User))
                         {
                             @if (User.IsInRole("Admin") || User.IsInRole("Employee"))
