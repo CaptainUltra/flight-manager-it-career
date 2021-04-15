@@ -9,16 +9,21 @@ using FlightManager.Data;
 using FlightsManager.Data.Models;
 using FlightManager.ViewModels;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity.UI.Services;
+using System.Text;
+using System.Text.Encodings.Web;
 
 namespace FlightManager.Controllers
 {
     public class ReservationsController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private IEmailSender emailSender;
 
-        public ReservationsController(ApplicationDbContext context)
+        public ReservationsController(ApplicationDbContext context, IEmailSender emailSender)
         {
             _context = context;
+            this.emailSender = emailSender;
         }
 
         // GET: Reservations
@@ -141,19 +146,19 @@ namespace FlightManager.Controllers
 
                 if (capacity > 0)
                 {
-                    var relation = new PassengerReservation() 
-                    { 
+                    var relation = new PassengerReservation()
+                    {
                         Passenger = passenger,
                         PassengerId = passenger.Id,
                         ReservationId = reservation.Id,
                         Reservation = reservation,
-                        TicketType = (TicketTypes)ticketType 
+                        TicketType = (TicketTypes)ticketType
                     };
 
                     reservation.Passengers.Add(relation);
                     passenger.Reservations.Add(relation);
                     await _context.SaveChangesAsync();
-                }                
+                }
 
                 model = new PassengerReservationViewModel()
                 {
@@ -165,10 +170,60 @@ namespace FlightManager.Controllers
 
             if (model.CurrentCount == 0)
             {
-                return RedirectToAction(nameof(Index));
+                var callbackUrl = Url.Action(
+                        "Confirm",
+                        "Reservations",
+                        values: new { id = reservation.Id },
+                        protocol: Request.Scheme);
+
+                reservation = await _context.Reservations
+                    .Include(r => r.Flight)
+                    .Include(r => r.Passengers)
+                    .ThenInclude(p => p.Passenger)
+                    .FirstOrDefaultAsync(m => m.Id == model.ReservationId);
+
+                var message = new StringBuilder();
+                message.Append($"Моля, потвърдете резервацията си като <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>натиснете тук</a>.");
+                message.Append("<br />");
+                message.Append($"{reservation.Passengers.Count} общо пътници за полет {reservation.Flight.FlightNumber}. Списък:");
+                message.Append("<br />");
+                foreach (var passengerReservation in reservation.Passengers)
+                {
+                    var passenger = passengerReservation.Passenger;
+                    message.Append($"{passenger.PersonalNo} {passenger.FirstName} {passenger.MiddleName} {passenger.LastName} {passengerReservation.TicketType}");
+                    message.Append("<br />");
+                }
+                await this.emailSender.SendEmailAsync(reservation.Email, "Потвърждение на резервация", message.ToString());
+                return View("ConfirmationNeeded");
             }
 
             return View(model);
+        }
+
+        public async Task<IActionResult> Confirm(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var reservation = await _context.Reservations.FirstOrDefaultAsync(m => m.Id == id);
+            if (reservation == null)
+            {
+                return NotFound();
+            }
+
+            reservation.IsConfirmed = true;
+            try
+            {
+                _context.Update(reservation);
+                var result = await _context.SaveChangesAsync();
+                return View();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
         // GET: Reservations/Edit/5
