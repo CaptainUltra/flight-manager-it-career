@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -26,11 +27,19 @@ namespace FlightManager.ViewModels
         public int ReservationId { get; set; }
         public int PassengerCount { get; set; }
         public int CurrentCount { get; set; }
+        [Required]
+        [StringLength(10)]
         public string PersonalNo { get; set; }
+        [Required]
         public string FirstName { get; set; }
+        [Required]
         public string MiddleName { get; set; }
+        [Required]
         public string LastName { get; set; }
+        [Required]
+        [Phone]
         public string Telephone { get; set; }
+        [Required]
         public string Nationality { get; set; }
         public int TicketType { get; set; }
     }
