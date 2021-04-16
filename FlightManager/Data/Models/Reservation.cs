@@ -16,11 +16,8 @@ namespace FlightsManager.Data.Models
         [Required]
         [EmailAddress]
         public string Email { get; set; }
-        [Required]
         public bool IsConfirmed { get; set; }
-        [Required]
         public int FlightId { get; set; }
-        [Required]
         public Flight Flight { get; set; }
         public List<PassengerReservation> Passengers { get; set; }
     }
