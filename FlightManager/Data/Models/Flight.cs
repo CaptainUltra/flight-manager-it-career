@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace FlightsManager.Data.Models
@@ -27,5 +28,6 @@ namespace FlightsManager.Data.Models
         public int PassengerCapacity { get; set; }
         [Required]
         public int BusinessCapacity { get; set; }
+        public List<Reservation> Reservations { get; set; }
     }
 }
