@@ -17,6 +17,7 @@ namespace FlightManager.Data.Models
         public string LastName { get; set; }
         [Required]
         [PersonalData]
+        [StringLength(10)]
         public string PersonalNo { get; set; }
         [Required]
         [PersonalData]
