@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using FlightManager.Data;
 using FlightsManager.Data.Models;
 using Microsoft.AspNetCore.Authorization;
+using FlightManager.HelperClasses;
 
 namespace FlightManager.Controllers
 {
@@ -21,9 +22,29 @@ namespace FlightManager.Controllers
         }
 
         // GET: Flights
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string fromSearch, string toSearch, int? pageNumber)
         {
-            return View(await _context.Flights.ToListAsync());
+            if (fromSearch != null || toSearch != null)
+            {
+                pageNumber = 1;
+            }
+
+            ViewData["FromSearch"] = fromSearch;
+            ViewData["ToSearch"] = toSearch;
+
+            var flights = from f in _context.Flights
+                        select f;
+            if (!String.IsNullOrEmpty(fromSearch))
+            {
+                flights = flights.Where(f => f.From.Contains(fromSearch));
+            }
+            if (!String.IsNullOrEmpty(toSearch))
+            {
+                flights = flights.Where(f => f.To.Contains(toSearch));
+            }
+
+            int pageSize = 3;
+            return View(await PaginatedList<Flight>.CreateAsync(flights, pageNumber ?? 1, pageSize));
         }
 
         // GET: Flights/Details/5
