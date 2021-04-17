@@ -4,7 +4,7 @@
     ViewData["Title"] = "User Create";
 }
 
-<h1>User Create</h1>
+<h1>Създаване на потребител</h1>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -16,37 +16,37 @@
                 <span asp-validation-for="Email" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Password"></label>
+                <label asp-for="Password">Парола</label>
                 <input asp-for="Password" class="form-control" />
                 <span asp-validation-for="Password" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="ConfirmPassword"></label>
+                <label asp-for="ConfirmPassword">Потвърждение парола</label>
                 <input asp-for="ConfirmPassword" class="form-control" />
                 <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="FirstName"></label>
+                <label asp-for="FirstName">Име</label>
                 <input asp-for="FirstName" class="form-control" />
                 <span asp-validation-for="FirstName" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="LastName"></label>
+                <label asp-for="LastName">Фамилия</label>
                 <input asp-for="LastName" class="form-control" />
                 <span asp-validation-for="LastName" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="PersonalNo"></label>
+                <label asp-for="PersonalNo">ЕГН</label>
                 <input asp-for="PersonalNo" class="form-control" />
                 <span asp-validation-for="PersonalNo" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Address"></label>
+                <label asp-for="Address">Адрес</label>
                 <input asp-for="Address" class="form-control" />
                 <span asp-validation-for="Address" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Phone"></label>
+                <label asp-for="Phone">Телефон</label>
                 <input asp-for="Phone" class="form-control" />
                 <span asp-validation-for="Phone" class="text-danger"></span>
             </div>
@@ -57,13 +57,13 @@
                     <option value="2">Служител</option>
                 </select>
             </div>
-            <button type="submit" class="btn btn-primary">Create</button>
+            <button type="submit" class="btn btn-primary">Създаване</button>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">Списък с всички потребители</a>
 </div>
 
 @section Scripts {

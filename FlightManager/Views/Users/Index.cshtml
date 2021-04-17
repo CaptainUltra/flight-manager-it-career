@@ -5,10 +5,10 @@
     ViewData["Title"] = "User index";
 }
 
-<h1>User index</h1>
+<h1>Всички потребители</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create">Създаване на нов</a>
 </p>
 
 <form asp-action="Index" method="get" class="form-inline">
@@ -33,13 +33,13 @@
                 @Html.DisplayNameFor(model => model.First().Email)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.First().FirstName)
+                Име
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.First().LastName)
+                Фамилия
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.First().PersonalNo)
+                ЕГН
             </th>
             <th></th>
         </tr>
@@ -64,9 +64,9 @@
                     @Html.DisplayFor(modelItem => item.PersonalNo)
                 </td>
                 <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Промяна</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id">Детайли</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">Изтриване</a>
                 </td>
             </tr>
         }
@@ -83,12 +83,12 @@
    asp-route-pageNumber="@(Model.PageIndex - 1)"
    asp-route-currentFilter="@ViewData["CurrentFilter"]"
    class="btn btn-default @prevDisabled">
-    Previous
+    Предишна
 </a>
 <a asp-action="Index"
    asp-route-sortOrder="@ViewData["CurrentSort"]"
    asp-route-pageNumber="@(Model.PageIndex + 1)"
    asp-route-currentFilter="@ViewData["CurrentFilter"]"
    class="btn btn-default @nextDisabled">
-    Next
+    Следваща
 </a>
