@@ -29,10 +29,10 @@
             @Html.DisplayFor(model => model.DepartureDateTime)
         </dd>
         <dt class="col-sm-2">
-            Дата/час на кацане
+            Продължителност на полет
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.ArrivalDateTime)
+            @(Model.ArrivalDateTime - Model.DepartureDateTime)
         </dd>
         <dt class="col-sm-2">
             Тип самолет
