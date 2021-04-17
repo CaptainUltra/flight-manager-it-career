@@ -26,6 +26,10 @@ namespace FlightManager.ViewModels
         [Required]
         [Display(Name = "Address")]
         public string Address { get; set; }
+        [Required]
+        [Display(Name = "Telehpone")]
+        [Phone]
+        public string Phone { get; set; }
 
         public int Role { get; set; }
     }

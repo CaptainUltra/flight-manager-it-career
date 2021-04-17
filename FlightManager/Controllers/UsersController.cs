@@ -70,7 +70,8 @@ namespace FlightManager.Controllers
                     Address = input.Address,
                     FirstName = input.FirstName,
                     LastName = input.LastName,
-                    PersonalNo = input.PersonalNo
+                    PersonalNo = input.PersonalNo,
+                    PhoneNumber = input.Phone
                 };
 
                 string role = input.Role == 1 ? "Admin" : "Employee";
@@ -120,6 +121,7 @@ namespace FlightManager.Controllers
                     FirstName = user.FirstName,
                     LastName = user.LastName,
                     PersonalNo = user.PersonalNo,
+                    Phone = user.PhoneNumber,
                     Role = role == "Admin" ? 1 : 2
                 };
                 return View(model);
@@ -145,6 +147,7 @@ namespace FlightManager.Controllers
                 user.FirstName = model.FirstName;
                 user.LastName = model.LastName;
                 user.PersonalNo = model.PersonalNo;
+                user.PhoneNumber = model.Phone;
                 string role = model.Role == 1 ? "Admin" : "Employee";
                 await userManager.RemoveFromRoleAsync(user, "Admin");
                 await userManager.RemoveFromRoleAsync(user, "Employee");

@@ -78,6 +78,11 @@ namespace FlightManager.Areas.Identity.Pages.Account
             [Required]
             [Display(Name = "Address")]
             public string Address { get; set; }
+
+            [Required]
+            [Display(Name = "Telehpone")]
+            [Phone]
+            public string Phone { get; set; }
         }
 
         public async Task OnGetAsync(string returnUrl = null)
@@ -92,7 +97,7 @@ namespace FlightManager.Areas.Identity.Pages.Account
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
             {
-                var user = new User { UserName = Input.Email, Email = Input.Email, Address = Input.Address, FirstName = Input.FirstName, LastName = Input.LastName, PersonalNo = Input.PersonalNo };
+                var user = new User { UserName = Input.Email, Email = Input.Email, Address = Input.Address, FirstName = Input.FirstName, LastName = Input.LastName, PersonalNo = Input.PersonalNo, PhoneNumber = Input.Phone };
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {
