@@ -9,6 +9,17 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
+
+<form asp-action="Index" method="get" class="form-inline">
+    <div class="form-actions no-color">
+        <p>
+            Търсене по e-mail: <input type="text" name="EmailSearch" value="@ViewData["EmailSearch"]"  class="form-control w-25"   />
+            <input type="submit" value="Търсене" class="btn btn-primary" />
+            <a asp-action="Index">Изчистване</a>
+        </p>
+    </div>
+</form>
+
 <table class="table">
     <thead>
         <tr>

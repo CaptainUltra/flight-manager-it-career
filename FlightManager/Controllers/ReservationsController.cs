@@ -28,10 +28,17 @@ namespace FlightManager.Controllers
 
         // GET: Reservations
         [Authorize(Roles = "Admin,Employee")]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string emailSearch)
         {
-            var applicationDbContext = _context.Reservations.Include(r => r.Flight);
-            return View(await applicationDbContext.ToListAsync());
+            ViewData["EmailSearch"] = emailSearch;
+
+            var reservations = from r in _context.Reservations
+                           select r;
+            if (!String.IsNullOrEmpty(emailSearch))
+            {
+                reservations = reservations.Where(r => r.Email.Contains(emailSearch));
+            }
+            return View(await reservations.Include(r => r.Flight).ToListAsync());
         }
 
         // GET: Reservations/Details/5
