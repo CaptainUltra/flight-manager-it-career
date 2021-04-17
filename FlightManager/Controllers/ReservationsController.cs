@@ -120,7 +120,10 @@ namespace FlightManager.Controllers
         public async Task<IActionResult> AddPassengers(int? rnd = null)
         {
             var model = new PassengerReservationViewModel(this.Request.Form);
-            var reservation = await _context.Reservations.FindAsync(model.ReservationId);
+            var reservation = await _context.Reservations
+                .Include(r => r.Flight)
+                .Include(r => r.Passengers)
+                .FirstOrDefaultAsync(m => m.Id == model.ReservationId);
             var flight = await _context.Flights.FindAsync(reservation.FlightId);
             ViewData.Add("BusinessSeats", flight.BusinessCapacity);
             ViewData.Add("RegularSeats", flight.PassengerCapacity);
@@ -150,13 +153,13 @@ namespace FlightManager.Controllers
                 {
                     case 1:
                         {
-                            capacity = reservation.Flight.PassengerCapacity;
+                            capacity = reservation.Flight.PassengerCapacity - reservation.Passengers.Where(r => r.TicketType == TicketTypes.Regular).Count();
                             ticketType = TicketTypes.Regular;
                             break;
                         }
                     case 2:
                         {
-                            capacity = reservation.Flight.BusinessCapacity;
+                            capacity = reservation.Flight.BusinessCapacity - reservation.Passengers.Where(r => r.TicketType == TicketTypes.Business).Count();
                             ticketType = TicketTypes.Business;
                             break;
                         }
