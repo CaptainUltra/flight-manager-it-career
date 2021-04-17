@@ -225,13 +225,18 @@ namespace FlightManager.Controllers
                 return NotFound();
             }
 
-            var reservation = await _context.Reservations.FirstOrDefaultAsync(m => m.Id == id);
+            var reservation = await _context.Reservations
+                .Include(r => r.Flight)
+                .Include(r => r.Passengers)
+                .FirstOrDefaultAsync(m => m.Id == id);
             if (reservation == null)
             {
                 return NotFound();
             }
 
             reservation.IsConfirmed = true;
+            reservation.Flight.PassengerCapacity -= reservation.Passengers.Where(r => r.TicketType == TicketTypes.Regular).Count();
+            reservation.Flight.BusinessCapacity -= reservation.Passengers.Where(r => r.TicketType == TicketTypes.Business).Count();
             try
             {
                 _context.Update(reservation);
