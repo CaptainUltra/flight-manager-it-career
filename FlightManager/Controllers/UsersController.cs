@@ -20,9 +20,28 @@ namespace FlightManager.Controllers
         }
 
         [Authorize(Roles = "Admin")]
-        public IActionResult Index()
+        public IActionResult Index(string emailSearch, string firstNameSearch, string lastNameSearch)
         {
-            return View(userManager.Users);
+            ViewData["EmailSearch"] = emailSearch;
+            ViewData["FirstNameSearch"] = firstNameSearch;
+            ViewData["LastNameSearch"] = lastNameSearch;
+
+            var users = from u in userManager.Users
+                               select u;
+            if (!String.IsNullOrEmpty(emailSearch))
+            {
+                users = users.Where(u => u.Email.Contains(emailSearch));
+            }
+            if (!String.IsNullOrEmpty(firstNameSearch))
+            {
+                users = users.Where(u => u.FirstName.Contains(firstNameSearch));
+            }
+            if (!String.IsNullOrEmpty(lastNameSearch))
+            {
+                users = users.Where(u => u.LastName.Contains(lastNameSearch));
+            }
+
+            return View(users);
         }
 
         [Authorize(Roles = "Admin")]
