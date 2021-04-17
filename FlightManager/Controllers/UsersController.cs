@@ -1,5 +1,6 @@
 ﻿using FlightManager.Areas.Identity.Pages.Account;
 using FlightManager.Data.Models;
+using FlightManager.HelperClasses;
 using FlightManager.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -20,8 +21,13 @@ namespace FlightManager.Controllers
         }
 
         [Authorize(Roles = "Admin")]
-        public IActionResult Index(string emailSearch, string firstNameSearch, string lastNameSearch)
+        public async Task<IActionResult> Index(string emailSearch, string firstNameSearch, string lastNameSearch, int? pageNumber)
         {
+            if (emailSearch != null)
+            {
+                pageNumber = 1;
+            }
+
             ViewData["EmailSearch"] = emailSearch;
             ViewData["FirstNameSearch"] = firstNameSearch;
             ViewData["LastNameSearch"] = lastNameSearch;
@@ -41,7 +47,8 @@ namespace FlightManager.Controllers
                 users = users.Where(u => u.LastName.Contains(lastNameSearch));
             }
 
-            return View(users);
+            int pageSize = 3;
+            return View(await PaginatedList<User>.CreateAsync(users, pageNumber ?? 1, pageSize));
         }
 
         [Authorize(Roles = "Admin")]
