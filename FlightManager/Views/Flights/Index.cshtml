@@ -1,4 +1,8 @@
 ﻿@using FlightManager.HelperClasses
+@using FlightManager.Data.Models
+@inject Microsoft.AspNetCore.Identity.SignInManager<User> SignInManager
+@inject Microsoft.AspNetCore.Identity.UserManager<User> UserManager
+
 @model PaginatedList<FlightsManager.Data.Models.Flight>
 
 @{
@@ -7,9 +11,12 @@
 
 <h1>Всички полети</h1>
 
-<p>
-    <a asp-action="Create">Добавяне на нов</a>
-</p>
+@if (SignInManager.IsSignedIn(User) && User.IsInRole("Admin"))
+{
+    <p>
+        <a asp-action="Create">Добавяне на нов</a>
+    </p>
+}
 
 <form asp-action="Index" method="get" class="form-inline">
     <div class="form-actions no-color">
@@ -87,9 +94,15 @@
                     @Html.DisplayFor(modelItem => item.BusinessCapacity)
                 </td>
                 <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id">Промяна</a> |
-                    <a asp-action="Details" asp-route-id="@item.Id">Детайли</a> |
-                    <a asp-action="Delete" asp-route-id="@item.Id">Изтриване</a>
+                    <a asp-action="Details" asp-route-id="@item.Id">Детайли</a>
+                    @if (SignInManager.IsSignedIn(User) && User.IsInRole("Admin"))
+                    {
+                        @("|")
+                        <a asp-action="Edit" asp-route-id="@item.Id">Промяна</a>
+                        @("|")
+                        <a asp-action="Delete" asp-route-id="@item.Id">Изтриване</a>
+
+                    }
                 </td>
             </tr>
         }
