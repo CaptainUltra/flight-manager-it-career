@@ -4,69 +4,69 @@
     ViewData["Title"] = "Details";
 }
 
-<h1>Details</h1>
+<h1>Детайли</h1>
 
 <div>
-    <h4>Flight</h4>
+    <h4>Полет</h4>
     <hr />
     <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.From)
+        <dt class="col-sm-2">
+            От
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.From)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.To)
+        <dt class="col-sm-2">
+            До
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.To)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.DepartureDateTime)
+        <dt class="col-sm-2">
+            Дата/час на излитане
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.DepartureDateTime)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ArrivalDateTime)
+        <dt class="col-sm-2">
+            Дата/час на кацане
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.ArrivalDateTime)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.AircraftType)
+        <dt class="col-sm-2">
+            Тип самолет
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.AircraftType)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.FlightNumber)
+        <dt class="col-sm-2">
+            Номер на полет
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.FlightNumber)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.PilotName)
+        <dt class="col-sm-2">
+            Име на пилот
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.PilotName)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.PassengerCapacity)
+        <dt class="col-sm-2">
+            Обикновени места
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.PassengerCapacity)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.BusinessCapacity)
+        <dt class="col-sm-2">
+            Бизнес места
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.BusinessCapacity)
         </dd>
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Edit" asp-route-id="@Model.Id">Промяна</a> |
+    <a asp-action="Index">Списък с всички полети</a>
 </div>

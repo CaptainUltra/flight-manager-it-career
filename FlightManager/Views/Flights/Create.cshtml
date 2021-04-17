@@ -4,68 +4,68 @@
     ViewData["Title"] = "Create";
 }
 
-<h1>Create</h1>
+<h1>Създаване</h1>
 
-<h4>Flight</h4>
+<h4>Полет</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="From" class="control-label"></label>
+                <label asp-for="From" class="control-label">От</label>
                 <input asp-for="From" class="form-control" />
                 <span asp-validation-for="From" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="To" class="control-label"></label>
+                <label asp-for="To" class="control-label">До</label>
                 <input asp-for="To" class="form-control" />
                 <span asp-validation-for="To" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="DepartureDateTime" class="control-label"></label>
+                <label asp-for="DepartureDateTime" class="control-label">Дата/час на излитане</label>
                 <input asp-for="DepartureDateTime" class="form-control" />
                 <span asp-validation-for="DepartureDateTime" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="ArrivalDateTime" class="control-label"></label>
+                <label asp-for="ArrivalDateTime" class="control-label">Дата/час на кацане</label>
                 <input asp-for="ArrivalDateTime" class="form-control" />
                 <span asp-validation-for="ArrivalDateTime" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="AircraftType" class="control-label"></label>
+                <label asp-for="AircraftType" class="control-label">Тип самолет</label>
                 <input asp-for="AircraftType" class="form-control" />
                 <span asp-validation-for="AircraftType" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="FlightNumber" class="control-label"></label>
+                <label asp-for="FlightNumber" class="control-label">Номер на полет</label>
                 <input asp-for="FlightNumber" class="form-control" />
                 <span asp-validation-for="FlightNumber" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="PilotName" class="control-label"></label>
+                <label asp-for="PilotName" class="control-label">Име на пилот</label>
                 <input asp-for="PilotName" class="form-control" />
                 <span asp-validation-for="PilotName" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="PassengerCapacity" class="control-label"></label>
+                <label asp-for="PassengerCapacity" class="control-label">Обикновени места</label>
                 <input asp-for="PassengerCapacity" class="form-control" />
                 <span asp-validation-for="PassengerCapacity" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="BusinessCapacity" class="control-label"></label>
+                <label asp-for="BusinessCapacity" class="control-label">Бизнес места</label>
                 <input asp-for="BusinessCapacity" class="form-control" />
                 <span asp-validation-for="BusinessCapacity" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Създаване" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">Списък с всички полети</a>
 </div>
 
 @section Scripts {

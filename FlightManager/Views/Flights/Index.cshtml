@@ -5,10 +5,10 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>Всички полети</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create">Добавяне на нов</a>
 </p>
 
 <form asp-action="Index" method="get" class="form-inline">
@@ -26,31 +26,31 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.First().From)
+                От
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.First().To)
+                До
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.First().DepartureDateTime)
+                Дата/час на излитане
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.First().ArrivalDateTime)
+                Дата/час на кацане
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.First().AircraftType)
+                Тип самолет
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.First().FlightNumber)
+                Номер на полет
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.First().PilotName)
+                Име на пилот
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.First().PassengerCapacity)
+                Обикновени места
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.First().BusinessCapacity)
+                Бизнес места
             </th>
             <th></th>
         </tr>
@@ -87,9 +87,9 @@
                     @Html.DisplayFor(modelItem => item.BusinessCapacity)
                 </td>
                 <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Промяна</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id">Детайли</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">Изтриване</a>
                 </td>
             </tr>
         }
@@ -106,12 +106,12 @@
    asp-route-pageNumber="@(Model.PageIndex - 1)"
    asp-route-currentFilter="@ViewData["CurrentFilter"]"
    class="btn btn-default @prevDisabled">
-    Previous
+    Предишна
 </a>
 <a asp-action="Index"
    asp-route-sortOrder="@ViewData["CurrentSort"]"
    asp-route-pageNumber="@(Model.PageIndex + 1)"
    asp-route-currentFilter="@ViewData["CurrentFilter"]"
    class="btn btn-default @nextDisabled">
-    Next
+    Следваща
 </a>
