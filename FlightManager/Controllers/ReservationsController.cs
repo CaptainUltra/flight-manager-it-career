@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using System.Text;
 using System.Text.Encodings.Web;
+using FlightManager.HelperClasses;
 
 namespace FlightManager.Controllers
 {
@@ -28,17 +29,27 @@ namespace FlightManager.Controllers
 
         // GET: Reservations
         [Authorize(Roles = "Admin,Employee")]
-        public async Task<IActionResult> Index(string emailSearch)
+        public async Task<IActionResult> Index(string emailSearch, string currentFilter, int? pageNumber)
         {
+            if (emailSearch != null)
+            {
+                pageNumber = 1;
+            }
+            else
+            {
+                emailSearch = currentFilter;
+            }
             ViewData["EmailSearch"] = emailSearch;
 
             var reservations = from r in _context.Reservations
-                           select r;
+                               select r;
             if (!String.IsNullOrEmpty(emailSearch))
             {
                 reservations = reservations.Where(r => r.Email.Contains(emailSearch));
             }
-            return View(await reservations.Include(r => r.Flight).ToListAsync());
+
+            int pageSize = 3;
+            return View(await PaginatedList<Reservation>.CreateAsync(reservations.Include(r => r.Flight), pageNumber ?? 1, pageSize));
         }
 
         // GET: Reservations/Details/5
